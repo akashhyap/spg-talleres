@@ -1,5 +1,4 @@
 ---
-import Icon from './Icon.astro';
 interface Props {
   class?: string;
   light?: boolean;
@@ -11,9 +10,10 @@ const subColor = light ? 'text-brand-100' : 'text-brand-500';
 
 <span class={`inline-flex items-center gap-2.5 ${className}`}>
   <span
-    class="grid aspect-square h-full place-items-center rounded-xl bg-brand-700 text-white shadow-sm"
+    class="grid aspect-square h-full place-items-center rounded-xl bg-brand-700 font-display text-[1.05em] font-extrabold leading-none tracking-tight text-white shadow-sm"
+    aria-hidden="true"
   >
-    <Icon name="wrench" size={22} />
+    IP
   </span>
   <span class="flex flex-col leading-none">
     <span class={`font-display text-[1.05rem] font-extrabold tracking-tight ${textColor}`}>
