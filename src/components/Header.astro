@@ -1,0 +1,185 @@
+---
+import { site } from '@data/site';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+
+const nav = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Servicios', href: '/servicios' },
+  { label: 'Sobre nosotros', href: '/sobre-nosotros' },
+  { label: 'Opiniones', href: '/opiniones' },
+  { label: 'Guías', href: '/guias' },
+  { label: 'Contacto', href: '/contacto' },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => {
+  const clean = href.replace(/\/$/, '') || '/';
+  return clean === '/' ? path === '/' : path === clean || path.startsWith(clean + '/');
+};
+---
+
+<header
+  id="site-header"
+  data-state="top"
+  class="z-50 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur transition-[transform,box-shadow] duration-300 ease-out
+         data-[state=top]:relative
+         data-[state=pinned]:fixed data-[state=pinned]:inset-x-0 data-[state=pinned]:top-0 data-[state=pinned]:translate-y-0 data-[state=pinned]:shadow-lg
+         data-[state=hidden]:fixed data-[state=hidden]:inset-x-0 data-[state=hidden]:top-0 data-[state=hidden]:-translate-y-full"
+>
+  <div class="container-page flex h-18 items-center justify-between gap-4 py-2.5">
+    <a href="/" class="flex items-center gap-2.5" aria-label={`${site.name} — inicio`}>
+      <Logo class="h-10 w-auto" />
+    </a>
+
+    <!-- Navegación de escritorio -->
+    <nav aria-label="Principal" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                class="rounded-md px-3 py-2 text-[0.95rem] font-medium text-slate-600 transition-colors hover:bg-brand-50 hover:text-brand-800 aria-[current=page]:text-brand-800 aria-[current=page]:font-semibold"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- CTA -->
+    <div class="hidden items-center gap-2 lg:flex">
+      <a
+        href={`tel:${site.phoneHref}`}
+        class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-brand-800 transition-colors hover:bg-brand-50"
+      >
+        <Icon name="phone" size={18} />
+        <span>{site.phone}</span>
+      </a>
+      <a
+        href={site.whatsappCta}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700"
+      >
+        <Icon name="whatsapp" size={18} />
+        <span>Pedir cita</span>
+      </a>
+    </div>
+
+    <!-- Botón menú móvil -->
+    <button
+      id="menu-toggle"
+      type="button"
+      class="inline-flex items-center justify-center rounded-lg p-2.5 text-brand-800 hover:bg-brand-50 lg:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="sr-only">Abrir menú</span>
+      <Icon name="menu" size={26} id="menu-icon-open" />
+    </button>
+  </div>
+
+  <!-- Menú móvil -->
+  <div
+    id="mobile-menu"
+    hidden
+    class="border-t border-slate-200 bg-white lg:hidden"
+  >
+    <nav aria-label="Móvil" class="container-page py-4">
+      <ul class="flex flex-col gap-1">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                class="block rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-brand-50 aria-[current=page]:bg-brand-50 aria-[current=page]:font-semibold aria-[current=page]:text-brand-800"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-4 flex flex-col gap-2.5 border-t border-slate-100 pt-4">
+        <a
+          href={`tel:${site.phoneHref}`}
+          class="inline-flex items-center justify-center gap-2 rounded-lg border border-brand-200 px-4 py-3 font-semibold text-brand-800"
+        >
+          <Icon name="phone" size={18} /> {site.phone}
+        </a>
+        <a
+          href={site.whatsappCta}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-4 py-3 font-semibold text-white"
+        >
+          <Icon name="whatsapp" size={18} /> Pedir cita por WhatsApp
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // ── Cabecera: visible al hacer scroll hacia arriba; en otros casos, en
+  //    flujo normal (relative) y se desplaza con la página. Respeta
+  //    prefers-reduced-motion mediante la regla global de CSS.
+  const header = document.getElementById('site-header');
+  if (header) {
+    const THRESHOLD = 80;
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const update = () => {
+      const y = window.scrollY;
+      if (y <= THRESHOLD) {
+        header.dataset.state = 'top'; // cerca del inicio → en flujo (relative)
+      } else if (y < lastY - 2) {
+        header.dataset.state = 'pinned'; // sube → fija y visible
+      } else if (y > lastY + 2) {
+        header.dataset.state = 'hidden'; // baja → se desplaza fuera de vista
+      }
+      lastY = y;
+      ticking = false;
+    };
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+    update();
+  }
+
+  // ── Menú móvil
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+      toggle.querySelector('.sr-only')!.textContent = open ? 'Cerrar menú' : 'Abrir menú';
+    };
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        (toggle as HTMLButtonElement).focus();
+      }
+    });
+  }
+</script>

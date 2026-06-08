@@ -1,0 +1,204 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/Hero.astro';
+import ServiceCard from '@components/ServiceCard.astro';
+import CTASection from '@components/CTASection.astro';
+import StarRating from '@components/StarRating.astro';
+import Icon from '@components/Icon.astro';
+import { site } from '@data/site';
+import fachadaImg from '@/assets/fachada-taller.jpg';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const guias = (await getCollection('guias'))
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 3);
+
+const features = [
+  { icon: 'award', title: 'Experiencia desde 1925', text: 'Casi un siglo reparando coches en Palma. La confianza no se improvisa.' },
+  { icon: 'shield', title: 'Garantía de la red SPG', text: 'Respaldo en piezas y mano de obra, con asistencia a nivel nacional.' },
+  { icon: 'wrench', title: 'Taller multimarca', text: 'Trabajamos todas las marcas manteniendo la garantía oficial de tu vehículo.' },
+  { icon: 'diagnostics', title: 'Diagnóstico preciso', text: 'Equipos de diagnosis y formación continua para reparar la causa real.' },
+];
+
+const description = site.description;
+---
+
+<BaseLayout title="Taller mecánico en Palma de Mallorca" description={description}>
+  <Hero />
+
+  <!-- Servicios -->
+  <section class="container-page py-16 lg:py-20" aria-labelledby="servicios-titulo">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">Qué hacemos</p>
+      <h2 id="servicios-titulo" class="mt-2 text-[length:var(--text-h2)] font-bold text-brand-900">
+        Servicios de nuestro taller en Palma
+      </h2>
+      <p class="mt-4 text-lg text-slate-600">
+        Del mantenimiento básico a las reparaciones más complejas. Todo lo que tu coche necesita, en un mismo taller de confianza.
+      </p>
+    </div>
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {services.map((service) => <ServiceCard service={service} />)}
+    </div>
+    <div class="mt-10 text-center">
+      <a href="/servicios" class="inline-flex items-center gap-2 rounded-xl border border-brand-200 bg-white px-6 py-3 font-semibold text-brand-700 transition-colors hover:bg-brand-50">
+        Ver todos los servicios <Icon name="arrowRight" size={18} />
+      </a>
+    </div>
+  </section>
+
+  <!-- Por qué elegirnos -->
+  <section class="bg-brand-50/60 py-16 lg:py-20" aria-labelledby="porque-titulo">
+    <div class="container-page">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">Por qué elegirnos</p>
+        <h2 id="porque-titulo" class="mt-2 text-[length:var(--text-h2)] font-bold text-brand-900">
+          Un taller en el que dejar tu coche tranquilo
+        </h2>
+      </div>
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          features.map((f) => (
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <span class="grid h-12 w-12 place-items-center rounded-xl bg-brand-600 text-white">
+                <Icon name={f.icon} size={24} />
+              </span>
+              <h3 class="mt-4 text-lg font-semibold text-brand-900">{f.title}</h3>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-slate-600">{f.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre nosotros -->
+  <section class="container-page py-16 lg:py-20" aria-labelledby="sobre-titulo">
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+      <div class="overflow-hidden rounded-3xl shadow-xl ring-1 ring-slate-900/5">
+        <Image
+          src={fachadaImg}
+          alt="Fachada del Taller Isidro A. Pons en Carrer Joan Mestre 42, Palma"
+          widths={[480, 720, 960]}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          class="h-full w-full object-cover"
+        />
+      </div>
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">Sobre nosotros</p>
+        <h2 id="sobre-titulo" class="mt-2 text-[length:var(--text-h2)] font-bold text-brand-900">
+          Taller Isidro A. Pons, mecánica de confianza desde 1925
+        </h2>
+        <p class="mt-4 text-lg leading-relaxed text-slate-600">
+          Somos un taller familiar con casi un siglo de historia en Palma. Formamos parte de la
+          <strong class="font-semibold text-brand-700"> red SPG Talleres</strong>, lo que nos da acceso a la última
+          tecnología de diagnóstico, formación continua y garantía nacional, sin perder la cercanía y el trato directo
+          de siempre.
+        </p>
+        <ul class="mt-6 space-y-3">
+          {['Trato cercano y presupuesto claro antes de empezar', 'Recambios de calidad y garantía en cada reparación', 'Atención por WhatsApp para pedir cita sin llamadas'].map((item) => (
+            <li class="flex items-start gap-3 text-slate-700">
+              <Icon name="checkCircle" size={22} class="mt-0.5 shrink-0 text-brand-600" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <a href="/sobre-nosotros" class="mt-7 inline-flex items-center gap-2 font-semibold text-brand-700 hover:text-brand-900">
+          Conoce nuestra historia <Icon name="arrowRight" size={18} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Opiniones -->
+  <section class="bg-brand-50/60 py-16 lg:py-20" aria-labelledby="opiniones-titulo">
+    <div class="container-page flex flex-col items-center gap-6 text-center">
+      <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">Opiniones</p>
+      <h2 id="opiniones-titulo" class="text-[length:var(--text-h2)] font-bold text-brand-900">
+        Lo que dicen nuestros clientes
+      </h2>
+      <div class="flex flex-col items-center gap-2">
+        <span class="font-display text-5xl font-extrabold text-brand-900">{site.rating.value}</span>
+        <StarRating value={site.rating.value} size={26} />
+        <p class="text-slate-600">Valoración media basada en {site.rating.count} reseñas de Google</p>
+      </div>
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <a href={site.googleMapsUrl} target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white hover:bg-brand-700">
+          <Icon name="star" size={18} /> Ver reseñas en Google
+        </a>
+        <a href="/opiniones" class="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-200 bg-white px-6 py-3 font-semibold text-brand-700 hover:bg-white">
+          Más sobre nuestras opiniones
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guías -->
+  <section class="container-page py-16 lg:py-20" aria-labelledby="guias-titulo">
+    <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">Guías del taller</p>
+        <h2 id="guias-titulo" class="mt-2 text-[length:var(--text-h2)] font-bold text-brand-900">
+          Consejos para el cuidado de tu coche
+        </h2>
+      </div>
+      <a href="/guias" class="inline-flex items-center gap-2 font-semibold text-brand-700 hover:text-brand-900">
+        Ver todas las guías <Icon name="arrowRight" size={18} />
+      </a>
+    </div>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      {
+        guias.map((g) => (
+          <a href={`/guias/${g.id}`} class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+            <h3 class="text-lg font-semibold text-brand-900 group-hover:text-brand-700">{g.data.title}</h3>
+            <p class="mt-2 flex-1 text-[0.95rem] leading-relaxed text-slate-600">{g.data.summary}</p>
+            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
+              Leer guía <Icon name="arrowRight" size={16} class="transition-transform group-hover:translate-x-1" />
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <CTASection />
+
+  <!-- Ubicación -->
+  <section class="container-page mb-20" aria-labelledby="ubicacion-titulo">
+    <div class="grid overflow-hidden rounded-3xl border border-slate-200 shadow-sm lg:grid-cols-2">
+      <div class="bg-white p-8 lg:p-10">
+        <h2 id="ubicacion-titulo" class="text-[length:var(--text-h3)] font-bold text-brand-900">Dónde estamos</h2>
+        <ul class="mt-6 space-y-4 text-slate-700">
+          <li class="flex items-start gap-3">
+            <Icon name="mapPin" size={22} class="mt-0.5 shrink-0 text-brand-600" />
+            <span>{site.address.street}<br />{site.address.postalCode} {site.address.locality}, {site.address.region}</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="clock" size={22} class="mt-0.5 shrink-0 text-brand-600" />
+            <span>{site.openingHoursSummary}<br />{site.closedSummary}</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="phone" size={22} class="mt-0.5 shrink-0 text-brand-600" />
+            <a href={`tel:${site.phoneHref}`} class="hover:text-brand-700">{site.phone}</a>
+          </li>
+        </ul>
+        <a href="/contacto" class="mt-7 inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white hover:bg-brand-700">
+          Cómo llegar y pedir cita <Icon name="arrowRight" size={18} />
+        </a>
+      </div>
+      <div class="min-h-[320px]">
+        <iframe
+          title="Mapa con la ubicación del Taller Isidro A. Pons en Palma"
+          src={site.googleMapsEmbed}
+          width="100%"
+          height="100%"
+          style="border:0; min-height:320px;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

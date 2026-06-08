@@ -1,0 +1,101 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHeader from '@components/PageHeader.astro';
+import ServiceCard from '@components/ServiceCard.astro';
+import CTASection from '@components/CTASection.astro';
+import ServiceSchema from '@components/schema/ServiceSchema.astro';
+import Icon from '@components/Icon.astro';
+import { site } from '@data/site';
+
+export const getStaticPaths = (async () => {
+  const services = await getCollection('services');
+  return services.map((service) => ({
+    params: { slug: service.id },
+    props: { service, all: services },
+  }));
+}) satisfies GetStaticPaths;
+
+const { service, all } = Astro.props;
+const { Content } = await render(service);
+
+const related = service.data.related
+  .map((slug) => all.find((s) => s.id === slug))
+  .filter((s): s is (typeof all)[number] => Boolean(s));
+
+const url = `/servicios/${service.id}`;
+---
+
+<BaseLayout title={service.data.title} description={service.data.description}>
+  <ServiceSchema slot="head" name={service.data.title} description={service.data.description} url={url} />
+
+  <PageHeader
+    eyebrow="Servicios"
+    title={service.data.title}
+    lead={service.data.summary}
+    breadcrumbs={[
+      { name: 'Servicios', url: '/servicios' },
+      { name: service.data.shortTitle, url },
+    ]}
+  />
+
+  <div class="container-page grid gap-12 py-14 lg:grid-cols-[1fr_20rem] lg:gap-16">
+    <!-- Contenido -->
+    <article class="prose-content">
+      <Content />
+    </article>
+
+    <!-- Lateral -->
+    <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+      <div class="rounded-2xl border border-slate-200 bg-brand-50/60 p-6">
+        <h2 class="text-lg font-bold text-brand-900">¿Necesitas este servicio?</h2>
+        <p class="mt-2 text-sm text-slate-600">Pide cita sin compromiso. Te damos presupuesto antes de empezar.</p>
+        <div class="mt-4 flex flex-col gap-2.5">
+          <a href={site.whatsappCta} target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-4 py-3 text-sm font-semibold text-white hover:bg-brand-700">
+            <Icon name="whatsapp" size={18} /> Pedir cita por WhatsApp
+          </a>
+          <a href={`tel:${site.phoneHref}`} class="inline-flex items-center justify-center gap-2 rounded-lg border border-brand-200 bg-white px-4 py-3 text-sm font-semibold text-brand-800 hover:bg-brand-50">
+            <Icon name="phone" size={18} /> {site.phone}
+          </a>
+        </div>
+      </div>
+
+      {
+        related.length > 0 && (
+          <nav aria-label="Servicios relacionados" class="rounded-2xl border border-slate-200 bg-white p-6">
+            <h2 class="text-lg font-bold text-brand-900">Servicios relacionados</h2>
+            <ul class="mt-4 space-y-1">
+              {related.map((r) => (
+                <li>
+                  <a href={`/servicios/${r.id}`} class="flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-brand-50 hover:text-brand-800">
+                    <span class="flex items-center gap-2.5">
+                      <Icon name={r.data.icon} size={18} class="text-brand-600" />
+                      {r.data.shortTitle}
+                    </span>
+                    <Icon name="chevronRight" size={16} class="text-slate-400" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
+    </aside>
+  </div>
+
+  {
+    related.length > 0 && (
+      <section class="container-page border-t border-slate-200 py-14" aria-labelledby="rel-titulo">
+        <h2 id="rel-titulo" class="text-[length:var(--text-h3)] font-bold text-brand-900">Otros servicios que te pueden interesar</h2>
+        <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {related.map((r) => (
+            <ServiceCard service={r} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <CTASection />
+</BaseLayout>

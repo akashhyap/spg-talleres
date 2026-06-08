@@ -1,0 +1,25 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+interface Crumb {
+  name: string;
+  url: string;
+}
+interface Props {
+  title: string;
+  lead?: string;
+  breadcrumbs: Crumb[];
+  eyebrow?: string;
+}
+const { title, lead, breadcrumbs, eyebrow } = Astro.props;
+---
+
+<section class="border-b border-slate-200 bg-gradient-to-b from-brand-50/60 to-white">
+  <div class="container-page py-10 lg:py-14">
+    <Breadcrumbs items={breadcrumbs} />
+    {eyebrow && <p class="mt-6 text-sm font-semibold uppercase tracking-wider text-brand-600">{eyebrow}</p>}
+    <h1 class={`${eyebrow ? 'mt-2' : 'mt-6'} max-w-3xl text-[length:var(--text-h2)] font-extrabold text-brand-900`}>
+      {title}
+    </h1>
+    {lead && <p class="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">{lead}</p>}
+  </div>
+</section>

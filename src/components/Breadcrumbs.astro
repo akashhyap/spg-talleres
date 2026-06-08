@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+import BreadcrumbSchema from './schema/BreadcrumbSchema.astro';
+
+interface Crumb {
+  name: string;
+  url: string;
+}
+interface Props {
+  items: Crumb[];
+}
+const { items } = Astro.props;
+const withHome = [{ name: 'Inicio', url: '/' }, ...items];
+---
+
+<BreadcrumbSchema items={withHome} />
+<nav aria-label="Migas de pan" class="text-sm">
+  <ol class="flex flex-wrap items-center gap-1.5 text-slate-500">
+    {
+      withHome.map((item, i) => (
+        <li class="flex items-center gap-1.5">
+          {i > 0 && <Icon name="chevronRight" size={14} class="text-slate-400" />}
+          {i === withHome.length - 1 ? (
+            <span aria-current="page" class="font-medium text-slate-700">
+              {item.name}
+            </span>
+          ) : (
+            <a href={item.url} class="hover:text-brand-700 hover:underline">
+              {item.name}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

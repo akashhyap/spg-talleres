@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import { site } from '@data/site';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const year = new Date().getFullYear();
+
+const legal = [
+  { label: 'Aviso legal', href: '/aviso-legal' },
+  { label: 'Política de privacidad', href: '/politica-de-privacidad' },
+  { label: 'Política de cookies', href: '/politica-de-cookies' },
+];
+---
+
+<footer class="mt-20 border-t border-slate-200 bg-brand-950 text-slate-300">
+  <div class="container-page py-14">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr]">
+      <!-- Marca + contacto -->
+      <div>
+        <Logo class="h-11 w-auto" light />
+        <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
+          {site.description}
+        </p>
+        <ul class="mt-5 space-y-2.5 text-sm">
+          <li class="flex items-start gap-2.5">
+            <Icon name="mapPin" size={18} class="mt-0.5 shrink-0 text-accent-400" />
+            <span>{site.address.street}, {site.address.postalCode} {site.address.locality}, {site.address.region}</span>
+          </li>
+          <li>
+            <a href={`tel:${site.phoneHref}`} class="flex items-center gap-2.5 hover:text-white">
+              <Icon name="phone" size={18} class="shrink-0 text-accent-400" />
+              <span>{site.phone}</span>
+            </a>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <Icon name="clock" size={18} class="mt-0.5 shrink-0 text-accent-400" />
+            <span>{site.openingHoursSummary}<br />{site.closedSummary}</span>
+          </li>
+        </ul>
+        <div class="mt-5 flex items-center gap-3">
+          <a href={site.social.facebook} target="_blank" rel="noopener" class="rounded-full bg-white/10 p-2.5 transition-colors hover:bg-white/20" aria-label="Facebook">
+            <Icon name="facebook" size={18} />
+          </a>
+          <a href={site.whatsappCta} target="_blank" rel="noopener" class="rounded-full bg-white/10 p-2.5 transition-colors hover:bg-white/20" aria-label="WhatsApp">
+            <Icon name="whatsapp" size={18} />
+          </a>
+        </div>
+      </div>
+
+      <!-- Enlaces rápidos -->
+      <div>
+        <h2 class="font-display text-sm font-semibold uppercase tracking-wider text-white">Navegación</h2>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          <li><a href="/" class="text-slate-400 hover:text-white">Inicio</a></li>
+          <li><a href="/servicios" class="text-slate-400 hover:text-white">Servicios</a></li>
+          <li><a href="/sobre-nosotros" class="text-slate-400 hover:text-white">Sobre nosotros</a></li>
+          <li><a href="/opiniones" class="text-slate-400 hover:text-white">Opiniones</a></li>
+          <li><a href="/guias" class="text-slate-400 hover:text-white">Guías del taller</a></li>
+          <li><a href="/contacto" class="text-slate-400 hover:text-white">Contacto y cita</a></li>
+        </ul>
+      </div>
+
+      <!-- Servicios -->
+      <div>
+        <h2 class="font-display text-sm font-semibold uppercase tracking-wider text-white">Servicios</h2>
+        <ul class="mt-4 grid grid-cols-1 gap-x-6 gap-y-2.5 text-sm sm:grid-cols-2">
+          {
+            services.map((s) => (
+              <li>
+                <a href={`/servicios/${s.id}`} class="text-slate-400 hover:text-white">
+                  {s.data.shortTitle}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} {site.name} · {site.brand}. Todos los derechos reservados.</p>
+      <ul class="flex flex-wrap gap-x-5 gap-y-2">
+        {legal.map((l) => (
+          <li><a href={l.href} class="hover:text-white">{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</footer>

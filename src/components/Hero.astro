@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '@data/site';
+import Icon from './Icon.astro';
+import StarRating from './StarRating.astro';
+import heroImg from '@/assets/hero-taller.jpg';
+---
+
+<section class="relative overflow-hidden bg-gradient-to-b from-brand-50/70 to-white">
+  <div class="container-page grid items-center gap-10 py-14 lg:grid-cols-2 lg:gap-12 lg:py-20">
+    <!-- Texto -->
+    <div>
+      <p class="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-3.5 py-1.5 text-sm font-semibold text-brand-700 shadow-sm">
+        <Icon name="award" size={16} class="text-accent-500" /> Taller de confianza en Palma desde 1925
+      </p>
+      <h1 class="mt-5 text-[length:var(--text-display)] font-extrabold leading-[1.08] text-brand-900">
+        Tu taller mecánico de confianza en <span class="text-brand-600">Palma</span>
+      </h1>
+      <p class="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
+        Mantenimiento, mecánica, electricidad, neumáticos, diagnosis y preparación de la ITV.
+        Taller multimarca de la red <strong class="font-semibold text-brand-700">SPG Talleres</strong>,
+        con garantía y atención cercana.
+      </p>
+
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a
+          href={site.whatsappCta}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 font-semibold text-white shadow-sm transition-colors hover:bg-brand-700"
+        >
+          <Icon name="whatsapp" size={20} /> Pedir cita por WhatsApp
+        </a>
+        <a
+          href={`tel:${site.phoneHref}`}
+          class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3.5 font-semibold text-brand-800 transition-colors hover:border-brand-300 hover:bg-brand-50"
+        >
+          <Icon name="phone" size={20} /> {site.phone}
+        </a>
+      </div>
+
+      <!-- Señales de confianza -->
+      <dl class="mt-9 grid max-w-lg grid-cols-3 gap-4">
+        <div>
+          <dt class="sr-only">Valoración en Google</dt>
+          <dd class="flex flex-col">
+            <span class="flex items-center gap-1.5 font-display text-2xl font-bold text-brand-900">
+              {site.rating.value} <StarRating value={site.rating.value} size={16} />
+            </span>
+            <span class="text-sm text-slate-500">{site.rating.count} reseñas en Google</span>
+          </dd>
+        </div>
+        <div>
+          <dt class="font-display text-2xl font-bold text-brand-900">+95</dt>
+          <dd class="text-sm text-slate-500">años de experiencia</dd>
+        </div>
+        <div>
+          <dt class="font-display text-2xl font-bold text-brand-900">Multimarca</dt>
+          <dd class="text-sm text-slate-500">con garantía SPG</dd>
+        </div>
+      </dl>
+    </div>
+
+    <!-- Imagen -->
+    <div class="relative">
+      <div class="overflow-hidden rounded-3xl shadow-2xl ring-1 ring-slate-900/5">
+        <Image
+          src={heroImg}
+          alt="Interior del Taller Isidro A. Pons en Palma, con un mecánico trabajando en un vehículo"
+          widths={[480, 720, 960]}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+          class="h-full w-full object-cover"
+        />
+      </div>
+      <div class="absolute -bottom-5 -left-5 hidden rounded-2xl border border-slate-100 bg-white p-4 shadow-xl sm:block">
+        <div class="flex items-center gap-3">
+          <span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-600 text-white">
+            <Icon name="shield" size={22} />
+          </span>
+          <div>
+            <p class="text-sm font-semibold text-brand-900">Garantía SPG</p>
+            <p class="text-xs text-slate-500">Piezas y mano de obra</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

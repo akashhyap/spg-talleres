@@ -1,0 +1,19 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  value: number;
+  size?: number;
+  class?: string;
+}
+const { value, size = 20, class: className = '' } = Astro.props;
+const pct = Math.max(0, Math.min(100, (value / 5) * 100));
+---
+
+<span class={`relative inline-flex ${className}`} role="img" aria-label={`${value} de 5 estrellas`}>
+  <span class="flex text-slate-300">
+    {Array.from({ length: 5 }).map(() => <Icon name="star" size={size} />)}
+  </span>
+  <span class="absolute inset-0 flex overflow-hidden text-accent-400" style={`width:${pct}%`}>
+    {Array.from({ length: 5 }).map(() => <Icon name="star" size={size} class="shrink-0" />)}
+  </span>
+</span>

@@ -1,0 +1,124 @@
+---
+import { site } from '@data/site';
+import Icon from './Icon.astro';
+
+const fieldClass =
+  'w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 focus:outline-none';
+const labelClass = 'mb-1.5 block text-sm font-medium text-slate-700';
+---
+
+<!--
+  Formulario "estático": de momento no hay backend. Al enviar, se compone un
+  mensaje y se abre WhatsApp con los datos rellenados (operativo HOY).
+  PARA CONECTAR CON GOHIGHLEVEL más adelante: sustituir el listener `submit`
+  por el POST al webhook/formulario de GHL (o embeber el form de GHL).
+  Los `name` de los campos ya están preparados para ese mapeo.
+-->
+<form id="contact-form" class="space-y-4" novalidate data-whatsapp={site.whatsappCta.split('?')[0]}>
+  <!-- Honeypot anti-spam (oculto) -->
+  <div class="absolute left-[-9999px]" aria-hidden="true">
+    <label>No rellenar<input type="text" name="empresa_web" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label class={labelClass} for="cf-name">Nombre y apellidos *</label>
+      <input class={fieldClass} id="cf-name" name="nombre" type="text" required autocomplete="name" />
+    </div>
+    <div>
+      <label class={labelClass} for="cf-phone">Teléfono *</label>
+      <input class={fieldClass} id="cf-phone" name="telefono" type="tel" required autocomplete="tel" inputmode="tel" />
+    </div>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label class={labelClass} for="cf-email">Correo electrónico</label>
+      <input class={fieldClass} id="cf-email" name="email" type="email" autocomplete="email" />
+    </div>
+    <div>
+      <label class={labelClass} for="cf-vehicle">Vehículo (marca y modelo)</label>
+      <input class={fieldClass} id="cf-vehicle" name="vehiculo" type="text" placeholder="Ej. Seat León 1.6 TDI" />
+    </div>
+  </div>
+
+  <div>
+    <label class={labelClass} for="cf-service">Servicio que necesitas</label>
+    <select class={fieldClass} id="cf-service" name="servicio">
+      <option value="">Selecciona una opción</option>
+      <option>Mantenimiento y revisión</option>
+      <option>Cambio de aceite y filtros</option>
+      <option>Frenos</option>
+      <option>Neumáticos y alineación</option>
+      <option>Diagnosis electrónica</option>
+      <option>Aire acondicionado</option>
+      <option>Correa de distribución</option>
+      <option>Embrague</option>
+      <option>Suspensión y dirección</option>
+      <option>Pre-ITV</option>
+      <option>Otro / no estoy seguro</option>
+    </select>
+  </div>
+
+  <div>
+    <label class={labelClass} for="cf-message">Cuéntanos qué le pasa a tu coche</label>
+    <textarea class={fieldClass} id="cf-message" name="mensaje" rows="4"></textarea>
+  </div>
+
+  <div class="flex items-start gap-2.5">
+    <input class="mt-1 h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-300" id="cf-consent" name="consentimiento" type="checkbox" required />
+    <label class="text-sm text-slate-600" for="cf-consent">
+      He leído y acepto la <a href="/politica-de-privacidad" class="font-medium text-brand-700 underline">política de privacidad</a> y el tratamiento de mis datos para gestionar mi consulta. *
+    </label>
+  </div>
+
+  <p id="cf-error" class="hidden text-sm font-medium text-red-600" role="alert" aria-live="assertive"></p>
+
+  <button
+    type="submit"
+    class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 sm:w-auto"
+  >
+    <Icon name="whatsapp" size={20} /> Enviar por WhatsApp
+  </button>
+  <p class="text-xs text-slate-500">
+    * Campos obligatorios. Al enviar se abrirá WhatsApp con tu mensaje listo para que solo tengas que pulsar «enviar».
+  </p>
+</form>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form) {
+    const errorEl = document.getElementById('cf-error') as HTMLElement;
+    const base = form.dataset.whatsapp ?? '';
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Honeypot: si está relleno, ignoramos (probable bot)
+      if ((form.elements.namedItem('empresa_web') as HTMLInputElement)?.value) return;
+
+      if (!form.checkValidity()) {
+        errorEl.textContent = 'Por favor, revisa los campos obligatorios marcados con *.';
+        errorEl.classList.remove('hidden');
+        form.reportValidity();
+        return;
+      }
+      errorEl.classList.add('hidden');
+
+      const get = (name: string) => (form.elements.namedItem(name) as HTMLInputElement)?.value.trim() ?? '';
+      const lines = [
+        'Hola, me gustaría pedir cita / información:',
+        '',
+        `• Nombre: ${get('nombre')}`,
+        `• Teléfono: ${get('telefono')}`,
+        get('email') && `• Email: ${get('email')}`,
+        get('vehiculo') && `• Vehículo: ${get('vehiculo')}`,
+        get('servicio') && `• Servicio: ${get('servicio')}`,
+        get('mensaje') && `• Mensaje: ${get('mensaje')}`,
+      ].filter(Boolean);
+
+      const url = `${base}?text=${encodeURIComponent(lines.join('\n'))}`;
+      window.open(url, '_blank', 'noopener');
+    });
+  }
+</script>

@@ -1,0 +1,132 @@
+/* Fuentes variables autoalojadas (eje de peso). Cada @font-face lleva
+   unicode-range por subconjunto, de modo que el navegador solo descarga el
+   subconjunto "latin" necesario para el español (á é í ó ú ñ ü ¿ ¡). */
+@import '@fontsource-variable/sora/wght.css';
+@import '@fontsource-variable/inter/wght.css';
+
+@import 'tailwindcss';
+
+@theme {
+  /* Tipografía */
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Sora Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Color de marca — azul corporativo (rótulo del taller) */
+  --color-brand-50: #eef5fc;
+  --color-brand-100: #d7e7f7;
+  --color-brand-200: #b3cfee;
+  --color-brand-300: #82afe0;
+  --color-brand-400: #4f88cd;
+  --color-brand-500: #2e69b4;
+  --color-brand-600: #1f5197;
+  --color-brand-700: #1a4179;
+  --color-brand-800: #163461;
+  --color-brand-900: #122a4d;
+  --color-brand-950: #0c1c34;
+
+  /* Color de acento — ámbar (energía, automoción) */
+  --color-accent-50: #fff8eb;
+  --color-accent-100: #fdecc8;
+  --color-accent-200: #fbd78d;
+  --color-accent-300: #f9bd52;
+  --color-accent-400: #f7a528;
+  --color-accent-500: #f1880f;
+  --color-accent-600: #d56b08;
+  --color-accent-700: #b14e0b;
+  --color-accent-800: #903e10;
+  --color-accent-900: #763410;
+
+  /* Escala tipográfica fluida */
+  --text-display: clamp(2.25rem, 1.6rem + 3vw, 3.75rem);
+  --text-h2: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  --text-h3: clamp(1.35rem, 1.2rem + 0.7vw, 1.625rem);
+}
+
+@layer base {
+  :root {
+    --header-height: 4.5rem;
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white font-sans text-slate-700 antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display font-bold tracking-tight text-brand-900;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Foco visible y accesible en toda la interacción por teclado */
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-500 rounded-sm;
+  }
+
+  /* Respeta la preferencia de movimiento reducido */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .prose-content {
+    @apply max-w-none text-[1.0625rem] leading-relaxed text-slate-700;
+  }
+  .prose-content h2 {
+    @apply text-[length:var(--text-h2)] mt-12 mb-4;
+  }
+  .prose-content h3 {
+    @apply text-[length:var(--text-h3)] mt-8 mb-3;
+  }
+  .prose-content p {
+    @apply my-4;
+  }
+  .prose-content ul {
+    @apply my-4 space-y-2 pl-1;
+  }
+  .prose-content li {
+    @apply relative pl-7;
+  }
+  .prose-content li::before {
+    content: '';
+    @apply absolute left-0 top-2.5 h-2.5 w-2.5 rounded-full bg-accent-500;
+  }
+  .prose-content a {
+    @apply font-medium text-brand-700 underline decoration-accent-400 decoration-2 underline-offset-2 hover:text-brand-900;
+  }
+  .prose-content strong {
+    @apply font-semibold text-brand-900;
+  }
+}
+
+/* Enlace para saltar al contenido principal (accesibilidad) */
+.skip-link {
+  @apply sr-only;
+}
+.skip-link:focus {
+  @apply not-sr-only fixed left-4 top-4 z-[100] rounded-lg bg-brand-700 px-4 py-2 font-semibold text-white shadow-lg;
+}

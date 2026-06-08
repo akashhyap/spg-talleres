@@ -1,0 +1,71 @@
+---
+import '@/styles/global.css';
+import { site } from '@data/site';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import WhatsAppFloat from '@components/WhatsAppFloat.astro';
+import LocalBusinessSchema from '@components/schema/LocalBusinessSchema.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Imagen para redes sociales, relativa a la raíz (ej. /og-image.jpg) */
+  image?: string;
+  noindex?: boolean;
+  /** Título de pestaña sin el sufijo de marca */
+  rawTitle?: boolean;
+}
+
+const { title, description, image = '/og-image.jpg', noindex = false, rawTitle = false } = Astro.props;
+
+const siteName = `${site.name} · Palma`;
+const fullTitle = rawTitle ? title : `${title} | ${site.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '') || Astro.site!.href;
+const ogImage = new URL(image, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={site.name} />
+    <meta name="theme-color" content="#1a4179" />
+    <meta name="geo.region" content="ES-IB" />
+    <meta name="geo.placename" content="Palma de Mallorca" />
+    <meta name="geo.position" content={`${site.geo.latitude};${site.geo.longitude}`} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <LocalBusinessSchema />
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#contenido" class="skip-link">Saltar al contenido principal</a>
+    <Header />
+    <main id="contenido">
+      <slot />
+    </main>
+    <WhatsAppFloat />
+    <Footer />
+  </body>
+</html>

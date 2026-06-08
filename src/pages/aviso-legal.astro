@@ -1,0 +1,63 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHeader from '@components/PageHeader.astro';
+import { site } from '@data/site';
+---
+
+<BaseLayout title="Aviso legal" description="Aviso legal del sitio web del Taller Isidro A. Pons en Palma de Mallorca." noindex>
+  <PageHeader title="Aviso legal" breadcrumbs={[{ name: 'Aviso legal', url: '/aviso-legal' }]} />
+  <section class="container-page py-14">
+    <div class="prose-content mx-auto max-w-3xl">
+      <p class="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+        <strong>Pendiente de completar por el cliente:</strong> razón social, NIF/CIF y datos registrales.
+        Sustituye los campos marcados con <code>[…]</code>.
+      </p>
+
+      <h2>1. Datos identificativos</h2>
+      <p>
+        En cumplimiento de la Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio Electrónico
+        (LSSI-CE), se informa de los siguientes datos:
+      </p>
+      <ul>
+        <li><strong>Titular:</strong> [Razón social del titular]</li>
+        <li><strong>NIF/CIF:</strong> [NIF/CIF]</li>
+        <li><strong>Nombre comercial:</strong> {site.name} ({site.brand})</li>
+        <li><strong>Domicilio:</strong> {site.address.street}, {site.address.postalCode} {site.address.locality}, {site.address.region}</li>
+        <li><strong>Teléfono:</strong> {site.phone}</li>
+        <li><strong>Correo electrónico:</strong> {site.email}</li>
+      </ul>
+
+      <h2>2. Objeto</h2>
+      <p>
+        El presente aviso legal regula el uso del sitio web, cuyo titular pone a disposición de los usuarios con
+        carácter informativo sobre los servicios del taller. El acceso al sitio implica la aceptación de las presentes
+        condiciones.
+      </p>
+
+      <h2>3. Condiciones de uso</h2>
+      <p>
+        El usuario se compromete a hacer un uso adecuado de los contenidos del sitio y a no emplearlos para incurrir en
+        actividades ilícitas o contrarias a la buena fe. El titular no se hace responsable del mal uso que se realice de
+        los contenidos.
+      </p>
+
+      <h2>4. Propiedad intelectual e industrial</h2>
+      <p>
+        Todos los contenidos del sitio (textos, imágenes, logotipos, diseño) son titularidad del prestador o de terceros
+        que han autorizado su uso. Queda prohibida su reproducción sin autorización expresa.
+      </p>
+
+      <h2>5. Responsabilidad</h2>
+      <p>
+        El titular no garantiza la inexistencia de errores en el acceso al sitio ni en su contenido, ni que este se
+        encuentre actualizado en todo momento, si bien hará lo posible por evitarlos, subsanarlos o actualizarlos.
+      </p>
+
+      <h2>6. Legislación aplicable</h2>
+      <p>
+        Las presentes condiciones se rigen por la legislación española. Para la resolución de cualquier controversia, las
+        partes se someten a los juzgados y tribunales que correspondan conforme a derecho.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

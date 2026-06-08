@@ -1,0 +1,78 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHeader from '@components/PageHeader.astro';
+import ContactForm from '@components/ContactForm.astro';
+import Icon from '@components/Icon.astro';
+import { site } from '@data/site';
+
+const contactItems = [
+  { icon: 'mapPin', label: 'Dirección', value: `${site.address.street}, ${site.address.postalCode} ${site.address.locality}, ${site.address.region}`, href: site.googleMapsUrl, cta: 'Ver en Google Maps' },
+  { icon: 'phone', label: 'Teléfono', value: site.phone, href: `tel:${site.phoneHref}`, cta: 'Llamar ahora' },
+  { icon: 'whatsapp', label: 'WhatsApp', value: 'Escríbenos para pedir cita', href: site.whatsappCta, cta: 'Abrir WhatsApp' },
+  { icon: 'clock', label: 'Horario', value: `${site.openingHoursSummary} · ${site.closedSummary}` },
+];
+---
+
+<BaseLayout
+  title="Contacto y cita previa en Palma"
+  description="Contacta con el Taller Isidro A. Pons en Palma: teléfono, WhatsApp, dirección en Carrer Joan Mestre 42 y horario. Pide cita para tu coche sin compromiso."
+>
+  <PageHeader
+    eyebrow="Contacto"
+    title="Pide cita o pregúntanos lo que necesites"
+    lead="Estamos en Carrer Joan Mestre 42, Palma. Llámanos, escríbenos por WhatsApp o rellena el formulario y te respondemos lo antes posible."
+    breadcrumbs={[{ name: 'Contacto', url: '/contacto' }]}
+  />
+
+  <section class="container-page py-14 lg:py-16">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+      <!-- Datos de contacto -->
+      <div>
+        <h2 class="text-[length:var(--text-h3)] font-bold text-brand-900">Datos de contacto</h2>
+        <ul class="mt-6 space-y-4">
+          {
+            contactItems.map((item) => (
+              <li class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700">
+                  <Icon name={item.icon} size={22} />
+                </span>
+                <div>
+                  <p class="text-sm font-semibold uppercase tracking-wide text-slate-500">{item.label}</p>
+                  <p class="mt-0.5 text-slate-800">{item.value}</p>
+                  {item.href && (
+                    <a href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener' : undefined} class="mt-1.5 inline-flex items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-900">
+                      {item.cta} <Icon name="arrowRight" size={15} />
+                    </a>
+                  )}
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+          <iframe
+            title="Mapa con la ubicación del Taller Isidro A. Pons en Carrer Joan Mestre 42, Palma"
+            src={site.googleMapsEmbed}
+            width="100%"
+            height="300"
+            style="border:0;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div>
+        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <h2 class="text-[length:var(--text-h3)] font-bold text-brand-900">Solicita tu cita</h2>
+          <p class="mt-2 text-slate-600">Cuéntanos qué necesita tu coche y te respondemos lo antes posible.</p>
+          <div class="mt-6">
+            <ContactForm />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

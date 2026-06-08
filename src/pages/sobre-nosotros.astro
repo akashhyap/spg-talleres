@@ -1,0 +1,94 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHeader from '@components/PageHeader.astro';
+import CTASection from '@components/CTASection.astro';
+import Icon from '@components/Icon.astro';
+import { site } from '@data/site';
+import equipoImg from '@/assets/equipo-taller.jpg';
+
+const valores = [
+  { icon: 'award', title: 'Casi un siglo de oficio', text: 'Desde 1925 cuidando los coches de Palma. La experiencia es nuestra mejor garantía.' },
+  { icon: 'shield', title: 'Respaldo de la red SPG', text: 'Garantía nacional en piezas y mano de obra, tecnología de diagnóstico y formación continua.' },
+  { icon: 'users', title: 'Trato cercano y honesto', text: 'Te explicamos qué necesita tu coche y por qué, con un presupuesto claro antes de empezar.' },
+  { icon: 'wrench', title: 'Taller multimarca', text: 'Reparamos todas las marcas manteniendo la garantía oficial de tu vehículo.' },
+];
+---
+
+<BaseLayout
+  title="Sobre nosotros"
+  description="Taller Isidro A. Pons: taller mecánico familiar en Palma desde 1925, miembro de la red SPG Talleres. Experiencia, cercanía y garantía en cada reparación."
+>
+  <PageHeader
+    eyebrow="Sobre nosotros"
+    title="Un taller de confianza en Palma desde 1925"
+    lead="Cuatro generaciones de oficio mecánico al servicio de los conductores de Palma de Mallorca."
+    breadcrumbs={[{ name: 'Sobre nosotros', url: '/sobre-nosotros' }]}
+  />
+
+  <section class="container-page py-14 lg:py-16">
+    <div class="grid items-start gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-14">
+      <div class="prose-content">
+        <p>
+          El <strong>Taller Isidro A. Pons</strong> es un taller mecánico familiar con una historia que arranca en
+          <strong>1925</strong>. Desde entonces, hemos acompañado a varias generaciones de conductores de Palma,
+          adaptándonos a la evolución del automóvil sin perder nunca el trato cercano y honesto que nos define.
+        </p>
+        <p>
+          Hoy formamos parte de la <strong>red SPG Talleres</strong>, una red nacional de talleres profesionales. Esto nos
+          permite ofrecer lo mejor de dos mundos: la <strong>cercanía de un taller de barrio</strong> y la
+          <strong> tecnología, formación y garantía</strong> de una gran red. Disponemos de varios equipos de diagnosis y
+          recambios de calidad para reparar tu coche, sea de la marca que sea.
+        </p>
+        <h2>Nuestra forma de trabajar</h2>
+        <p>
+          Creemos que la confianza se gana con transparencia. Por eso <strong>diagnosticamos antes de reparar</strong>,
+          te damos un <strong>presupuesto claro</strong> y no hacemos nada sin tu visto bueno. Y para que pedir cita sea
+          fácil, puedes escribirnos directamente por <strong>WhatsApp</strong>.
+        </p>
+        <p>
+          Tanto si tu coche necesita un simple <a href="/servicios/mantenimiento-y-revisiones">mantenimiento</a> como una
+          reparación de <a href="/servicios/mecanica-general">mecánica general</a>, lo dejamos a punto con la garantía de
+          la red SPG.
+        </p>
+      </div>
+
+      <div class="overflow-hidden rounded-3xl shadow-xl ring-1 ring-slate-900/5">
+        <Image
+          src={equipoImg}
+          alt="Equipo del Taller Isidro A. Pons trabajando en el taller de Palma"
+          widths={[400, 600, 800]}
+          sizes="(min-width: 1024px) 40vw, 100vw"
+          class="h-full w-full object-cover"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-brand-50/60 py-14 lg:py-16" aria-labelledby="valores-titulo">
+    <div class="container-page">
+      <h2 id="valores-titulo" class="text-center text-[length:var(--text-h2)] font-bold text-brand-900">
+        Lo que nos diferencia
+      </h2>
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          valores.map((v) => (
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <span class="grid h-12 w-12 place-items-center rounded-xl bg-brand-600 text-white">
+                <Icon name={v.icon} size={24} />
+              </span>
+              <h3 class="mt-4 text-lg font-semibold text-brand-900">{v.title}</h3>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-slate-600">{v.text}</p>
+            </div>
+          ))
+        }
+      </div>
+      <p class="mx-auto mt-10 max-w-2xl text-center text-slate-600">
+        Nos encontrarás en <strong class="text-brand-800">{site.address.street}, {site.address.locality}</strong>.
+        ¿Hablamos? <a href="/contacto" class="font-semibold text-brand-700 underline">Pide cita aquí</a>.
+      </p>
+    </div>
+  </section>
+
+  <CTASection />
+</BaseLayout>
