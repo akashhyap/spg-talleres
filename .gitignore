@@ -1,5 +1,5 @@
-# build output
-dist/
+# build output (committed on purpose for deployment to Cloudways)
+# dist/
 # generated types
 .astro/
 # dependencies
