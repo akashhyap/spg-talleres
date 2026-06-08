@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '@data/site';
+import Icon from '@components/Icon.astro';
+import StarRating from '@components/StarRating.astro';
+import heroCar from '@/assets/hero-car.png';
+
+const rating = site.rating.value.toString().replace('.', ',');
+---
+
+<section class="relative overflow-hidden bg-white">
+  <!-- Panel diagonal: desde la derecha en escritorio, desde arriba en móvil -->
+  <div
+    class="pointer-events-none absolute inset-0 z-0 bg-[#eef2f7]
+           [clip-path:polygon(66%_0,100%_0,100%_84%,14%_84%)]
+           lg:[clip-path:polygon(50%_0,100%_0,100%_100%,36%_100%)]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="container-page relative z-10 pt-12 lg:py-24">
+    <div class="lg:max-w-xl">
+      <!-- Eyebrow con marcador -->
+      <p class="flex items-center gap-3">
+        <span class="inline-block h-4 w-5 -skew-x-12 bg-accent-600" aria-hidden="true"></span>
+        <span class="text-xs font-extrabold uppercase tracking-[0.18em] text-accent-600 sm:text-sm">
+          El taller de confianza en Palma · desde {site.foundedYear}
+        </span>
+      </p>
+
+      <!-- Titular -->
+      <h1 class="mt-5 font-display text-[clamp(2.5rem,1.8rem+3.2vw,4rem)] font-extrabold uppercase leading-[0.98] tracking-tight text-brand-900">
+        Cuidamos<br />tu coche<br /><span class="text-brand-600">en Palma</span>
+      </h1>
+
+      <p class="mt-5 max-w-lg text-base leading-relaxed text-slate-600 sm:text-lg">
+        Mecánica, neumáticos, diagnosis e ITV. Taller multimarca con garantía de la red SPG Talleres.
+      </p>
+
+      <!-- CTAs (esquinas rectas, estilo Macchina) -->
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a
+          href={site.whatsappCta}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center gap-2 bg-brand-700 px-7 py-4 text-sm font-extrabold uppercase tracking-widest text-white transition-colors hover:bg-brand-800"
+        >
+          Pedir cita
+        </a>
+        <a
+          href="/servicios"
+          class="hidden items-center justify-center border-2 border-brand-900 px-7 py-4 text-sm font-extrabold uppercase tracking-widest text-brand-900 transition-colors hover:bg-brand-900 hover:text-white sm:inline-flex"
+        >
+          Ver servicios
+        </a>
+      </div>
+
+      <!-- Estadísticas (contenido previo) — visibles en escritorio -->
+      <dl class="mt-10 hidden max-w-lg grid-cols-3 gap-6 lg:grid">
+        <div>
+          <dt class="sr-only">Valoración en Google</dt>
+          <dd>
+            <span class="flex items-center gap-2 font-display text-2xl font-extrabold text-brand-900">
+              {rating} <StarRating value={site.rating.value} size={15} />
+            </span>
+            <span class="text-sm text-slate-500">{site.rating.count} reseñas en Google</span>
+          </dd>
+        </div>
+        <div>
+          <dt class="font-display text-2xl font-extrabold text-brand-900">+95</dt>
+          <dd class="text-sm text-slate-500">años de experiencia</dd>
+        </div>
+        <div>
+          <dt class="font-display text-2xl font-extrabold text-brand-900">Multimarca</dt>
+          <dd class="text-sm text-slate-500">con garantía SPG</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Imagen del coche: en flujo (centrada) en móvil; absoluta a la derecha en escritorio -->
+  <div
+    class="relative z-10 -mt-2 pb-12 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:flex lg:w-[58%] lg:items-center lg:pb-0"
+  >
+    <Image
+      src={heroCar}
+      alt="Despiece de un coche que muestra el motor, la suspensión, la transmisión y los frenos"
+      widths={[420, 640, 820, 1040]}
+      sizes="(min-width: 1024px) 58vw, 92vw"
+      loading="eager"
+      fetchpriority="high"
+      class="mx-auto w-[92%] max-w-[560px] lg:mx-0 lg:w-full lg:max-w-none lg:translate-x-[5%]"
+    />
+  </div>
+</section>
