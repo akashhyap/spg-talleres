@@ -4,7 +4,6 @@ import { site } from '@data/site';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import WhatsAppFloat from '@components/WhatsAppFloat.astro';
-import MobileCtaBar from '@components/MobileCtaBar.astro';
 import LocalBusinessSchema from '@components/schema/LocalBusinessSchema.astro';
 
 interface Props {
@@ -71,7 +70,6 @@ const ogImage = new URL(image, Astro.site).href;
       <slot />
     </main>
     <WhatsAppFloat />
-    <MobileCtaBar />
     <Footer />
   </body>
 </html>
