@@ -3,13 +3,13 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Dominio del sitio. Configurable por variable de entorno para no tener que
-// tocar el código al cambiar de entorno:
-//   - Producción:  SITE_URL=https://www.tudominio.es npm run build
-//   - Staging:     SITE_URL=https://<tu-app>.cloudwaysapps.com npm run build
-//                  (así el canonical es auto-referencial y Lighthouse no penaliza)
-// Si no se define, se usa el dominio definitivo provisional.
-const SITE = process.env.SITE_URL || 'https://www.tallerisidropons.es';
+// URL del sitio. ⚠️ PUNTO ÚNICO DE CAMBIO: cuando se contrate el dominio
+// definitivo, basta con cambiar este valor (o definir la variable de entorno
+// SITE_URL) y reconstruir. Afecta a canonical, sitemap y Open Graph.
+//   p. ej.:  SITE_URL=https://www.tudominio.es npm run build
+// Por ahora se usa la URL actual de Cloudways para que el canonical sea
+// auto-referencial y no penalice en las auditorías SEO.
+const SITE = process.env.SITE_URL || 'https://phpstack-186938-6474031.cloudwaysapps.com';
 
 // https://astro.build/config
 export default defineConfig({

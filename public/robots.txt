@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.tallerisidropons.es/sitemap-index.xml
+Sitemap: https://phpstack-186938-6474031.cloudwaysapps.com/sitemap-index.xml
