@@ -20,10 +20,11 @@ export default defineConfig({
     // renderizado y permite descubrir las fuentes de inmediato (sin cadena).
     inlineStylesheets: 'always',
   },
-  prefetch: {
-    prefetchAll: true,
-    defaultStrategy: 'viewport',
-  },
+  // Prefetch desactivado: tras el proxy de Cloudways las peticiones de prefetch
+  // salían por http:// y el navegador las bloqueaba (Mixed Content), generando
+  // errores en consola que penalizaban "Best Practices". El prefetch quedaba
+  // además inutilizado al estar bloqueado. Si en el dominio definitivo el HTTPS
+  // se gestiona correctamente, puede reactivarse.
   vite: {
     plugins: [tailwindcss()],
   },
