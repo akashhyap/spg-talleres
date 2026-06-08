@@ -1,0 +1,6 @@
+# Página de error 404 personalizada (sitio estático)
+ErrorDocument 404 /404.html
+
+# Servir index.html para rutas tipo carpeta y evitar listados de directorio
+Options -Indexes
+DirectoryIndex index.html
