@@ -6,10 +6,31 @@
 
 @import 'tailwindcss';
 
+/* Fuentes de respaldo con métricas ajustadas (size-adjust / *-override) para
+   que el texto ocupe EXACTAMENTE el mismo espacio antes y después de cargar
+   las webfonts. Elimina el desplazamiento de diseño (CLS) por intercambio de
+   fuente. Valores calculados a partir de las métricas reales (@capsizecss). */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107.1194%;
+  ascent-override: 90.4365%;
+  descent-override: 22.5180%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Sora Fallback';
+  src: local('Arial');
+  size-adjust: 113.7279%;
+  ascent-override: 85.2913%;
+  descent-override: 25.4995%;
+  line-gap-override: 0%;
+}
+
 @theme {
   /* Tipografía */
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Sora Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter Variable', 'Inter Fallback', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Sora Variable', 'Sora Fallback', ui-sans-serif, system-ui, sans-serif;
 
   /* Color de marca — azul corporativo (rótulo del taller) */
   --color-brand-50: #eef5fc;
