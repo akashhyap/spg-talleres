@@ -1,0 +1,26 @@
+---
+// Barra de acción fija en la parte inferior (sólo móvil): Llamar + WhatsApp.
+import { site } from '@data/site';
+import Icon from './Icon.astro';
+---
+
+<div class="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 p-3 backdrop-blur lg:hidden">
+  <div class="flex gap-2.5">
+    <a
+      href={`tel:${site.phoneHref}`}
+      class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-brand-200 bg-white px-4 py-3 font-semibold text-brand-800"
+    >
+      <Icon name="phone" size={18} /> Llamar
+    </a>
+    <a
+      href={site.whatsappCta}
+      target="_blank"
+      rel="noopener"
+      class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand-600 px-4 py-3 font-semibold text-white"
+    >
+      <Icon name="whatsapp" size={18} /> WhatsApp
+    </a>
+  </div>
+</div>
+<!-- Espaciador para que la barra fija no tape el contenido final en móvil -->
+<div class="h-20 lg:hidden" aria-hidden="true"></div>

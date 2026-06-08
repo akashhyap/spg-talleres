@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '@data/site';
+import Icon from '@components/Icon.astro';
+import StarRating from '@components/StarRating.astro';
+import heroImg from '@/assets/hero-taller.jpg';
+
+const pills = [
+  { label: 'Mantenimiento', href: '/servicios/mantenimiento-y-revisiones' },
+  { label: 'Frenos', href: '/servicios/frenos' },
+  { label: 'Neumáticos', href: '/servicios/neumaticos-alineacion-equilibrado' },
+  { label: 'Diagnosis', href: '/servicios/diagnosis-electronica' },
+  { label: 'Pre-ITV', href: '/servicios/pre-itv' },
+];
+---
+
+<section class="relative overflow-hidden bg-gradient-to-b from-brand-50/70 to-white">
+  <div class="container-page grid items-center gap-10 py-12 lg:grid-cols-2 lg:gap-12 lg:py-20">
+    <!-- Columna de texto -->
+    <div>
+      <!-- Estado en vivo (lo actualiza el script) -->
+      <p
+        id="hero-status"
+        class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm"
+      >
+        <span id="hero-status-dot" class="h-2.5 w-2.5 rounded-full bg-slate-400"></span>
+        <span id="hero-status-text">Lunes a viernes · 8:00–16:00</span>
+      </p>
+
+      <h1 class="mt-5 text-[length:var(--text-display)] font-extrabold leading-[1.08] text-brand-900">
+        Reparamos tu coche sin sorpresas en <span class="text-brand-600">Palma</span>
+      </h1>
+
+      <p class="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
+        Mantenimiento, frenos, neumáticos, diagnosis y preparación de la ITV. Taller multimarca de la
+        red <strong class="font-semibold text-brand-700">SPG Talleres</strong>, con garantía y presupuesto
+        claro antes de empezar. <span class="font-medium text-brand-700">Pide cita en 1 minuto.</span>
+      </p>
+
+      <!-- CTAs -->
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a
+          href={site.whatsappCta}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 font-semibold text-white shadow-sm transition-colors hover:bg-brand-700"
+        >
+          <Icon name="whatsapp" size={20} /> Pedir cita por WhatsApp
+        </a>
+        <a
+          href={`tel:${site.phoneHref}`}
+          class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3.5 font-semibold text-brand-800 transition-colors hover:border-brand-300 hover:bg-brand-50"
+        >
+          <Icon name="phone" size={20} /> {site.phone}
+        </a>
+      </div>
+
+      <!-- Barra de confianza -->
+      <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm">
+        <span class="inline-flex items-center gap-2">
+          <span class="font-display text-base font-bold text-brand-900">{site.rating.value.toString().replace('.', ',')}</span>
+          <StarRating value={site.rating.value} size={16} />
+          <span class="text-slate-500">· {site.rating.count} reseñas Google</span>
+        </span>
+        <span class="hidden h-4 w-px bg-slate-200 sm:block"></span>
+        <span class="inline-flex items-center gap-1.5 font-semibold text-brand-800">
+          <Icon name="award" size={16} class="text-accent-500" /> Desde 1925
+        </span>
+        <span class="hidden h-4 w-px bg-slate-200 sm:block"></span>
+        <span class="inline-flex items-center gap-1.5 font-semibold text-brand-800">
+          <Icon name="shield" size={16} class="text-accent-500" /> Garantía SPG
+        </span>
+      </div>
+
+      <!-- Accesos rápidos a servicios -->
+      <ul class="mt-6 flex flex-wrap gap-2">
+        {
+          pills.map((p) => (
+            <li>
+              <a
+                href={p.href}
+                class="inline-flex rounded-full border border-brand-100 bg-brand-50 px-3.5 py-1.5 text-sm font-medium text-brand-700 transition-colors hover:border-brand-300 hover:bg-brand-100"
+              >
+                {p.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Columna de imagen -->
+    <div class="relative">
+      <div class="aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl ring-1 ring-slate-900/5">
+        <Image
+          src={heroImg}
+          alt="Interior del Taller Isidro A. Pons en Palma, con un mecánico trabajando en un vehículo"
+          widths={[480, 720, 960]}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+          class="h-full w-full object-cover"
+        />
+      </div>
+
+      <!-- Tarjeta: valoración Google -->
+      <div class="absolute -top-4 right-4 hidden rounded-2xl border border-slate-100 bg-white p-3.5 shadow-xl sm:block">
+        <div class="flex items-center gap-2">
+          <span class="font-display text-2xl font-extrabold text-brand-900">{site.rating.value.toString().replace('.', ',')}</span>
+          <StarRating value={site.rating.value} size={15} />
+        </div>
+        <p class="mt-0.5 text-xs text-slate-500">{site.rating.count} reseñas en Google</p>
+      </div>
+
+      <!-- Tarjeta: garantía -->
+      <div class="absolute -bottom-5 -left-4 hidden rounded-2xl border border-slate-100 bg-white p-4 shadow-xl sm:block">
+        <div class="flex items-center gap-3">
+          <span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-600 text-white">
+            <Icon name="shield" size={22} />
+          </span>
+          <div>
+            <p class="text-sm font-semibold text-brand-900">Garantía SPG</p>
+            <p class="text-xs text-slate-500">Piezas y mano de obra</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Estado "Abierto/Cerrado" en vivo según el horario (Europe/Madrid).
+  // Horario: lunes a viernes, 8:00–16:00.
+  const OPEN_FROM = 8 * 60; // 08:00 en minutos
+  const OPEN_TO = 16 * 60; // 16:00 en minutos
+  const dot = document.getElementById('hero-status-dot');
+  const text = document.getElementById('hero-status-text');
+
+  if (dot && text) {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Madrid',
+      weekday: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).formatToParts(new Date());
+    const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '';
+    const wd = get('weekday'); // Mon, Tue, ...
+    const mins = parseInt(get('hour'), 10) * 60 + parseInt(get('minute'), 10);
+    const isWeekday = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].includes(wd);
+    const open = isWeekday && mins >= OPEN_FROM && mins < OPEN_TO;
+
+    if (open) {
+      dot.className = 'h-2.5 w-2.5 rounded-full bg-green-500';
+      text.textContent = 'Abierto ahora · cierra a las 16:00';
+    } else {
+      dot.className = 'h-2.5 w-2.5 rounded-full bg-amber-500';
+      const opensSoon = isWeekday && mins < OPEN_FROM;
+      text.textContent = opensSoon ? 'Cerrado · abre hoy a las 8:00' : 'Cerrado · abre a las 8:00';
+    }
+  }
+</script>
