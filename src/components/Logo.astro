@@ -4,23 +4,32 @@ interface Props {
   light?: boolean;
 }
 const { class: className = 'h-10 w-auto', light = false } = Astro.props;
-const textColor = light ? 'text-white' : 'text-brand-900';
-const subColor = light ? 'text-brand-100' : 'text-brand-500';
+const textMain = light ? 'text-white' : 'text-brand-900';
+const textSub = light ? 'text-brand-100' : 'text-brand-500';
+
+// Rueda dentada. El "hueco" del cubo coincide con el fondo (blanco en cabecera,
+// azul oscuro en el pie) para que se vea como una rueda con buje.
+const disc = light ? '#ffffff' : '#1a4179';
+const hole = light ? '#0c1c34' : '#ffffff';
+const center = '#f1880f';
+
+const n = 9, cx = 24, cy = 24, rOut = 22, tw = rOut * 0.3, tl = rOut * 0.5;
+let gear = '';
+for (let i = 0; i < n; i++) {
+  const a = (i * 360) / n;
+  gear += `<rect x="${cx - tw / 2}" y="${cy - rOut}" width="${tw}" height="${tl}" rx="${tw * 0.35}" fill="${disc}" transform="rotate(${a} ${cx} ${cy})"/>`;
+}
+gear += `<circle cx="${cx}" cy="${cy}" r="${rOut * 0.82}" fill="${disc}"/><circle cx="${cx}" cy="${cy}" r="${rOut * 0.4}" fill="${hole}"/><circle cx="${cx}" cy="${cy}" r="${rOut * 0.17}" fill="${center}"/>`;
 ---
 
-<span class={`inline-flex items-center gap-2.5 ${className}`}>
-  <span
-    class="grid aspect-square h-full place-items-center rounded-xl bg-brand-700 font-display text-[1.05em] font-extrabold leading-none tracking-tight text-white shadow-sm"
-    aria-hidden="true"
-  >
-    IP
-  </span>
+<span class={`inline-flex items-center gap-2 ${className}`}>
+  <svg viewBox="0 0 48 48" class="h-full w-auto shrink-0" aria-hidden="true" set:html={gear}></svg>
   <span class="flex flex-col leading-none">
-    <span class={`font-display text-[1.05rem] font-extrabold tracking-tight ${textColor}`}>
+    <span class={`font-display text-[1.05rem] font-semibold tracking-tight ${textMain}`}>
       Taller Isidro Pons
     </span>
-    <span class={`mt-0.5 text-[0.66rem] font-semibold uppercase tracking-[0.18em] ${subColor}`}>
-      SPG · Desde 1925
+    <span class={`mt-1 text-[0.62rem] font-normal uppercase tracking-[0.2em] ${textSub}`}>
+      SPG Talleres
     </span>
   </span>
 </span>
