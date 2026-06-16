@@ -5,7 +5,7 @@
   },
   "hero": {
     "eyebrow": "El taller de confianza en Palma · desde 1925",
-    "headingLine1": "Cuidamos",
+    "headingLine1": "Cuidamos.",
     "headingLine2": "tu coche",
     "headingAccent": "en Palma",
     "subcopy": "Mecánica, neumáticos, diagnosis e ITV. Taller multimarca con garantía de la red SPG Talleres.",
@@ -28,10 +28,26 @@
     "heading": "Un taller en el que dejar tu coche tranquilo"
   },
   "features": [
-    { "icon": "award", "title": "Experiencia desde 1925", "text": "Casi un siglo reparando coches en Palma. La confianza no se improvisa." },
-    { "icon": "shield", "title": "Garantía de la red SPG", "text": "Respaldo en piezas y mano de obra, con asistencia a nivel nacional." },
-    { "icon": "wrench", "title": "Taller multimarca", "text": "Trabajamos todas las marcas manteniendo la garantía oficial de tu vehículo." },
-    { "icon": "diagnostics", "title": "Diagnóstico preciso", "text": "Equipos de diagnosis y formación continua para reparar la causa real." }
+    {
+      "icon": "award",
+      "title": "Experiencia desde 1925",
+      "text": "Casi un siglo reparando coches en Palma. La confianza no se improvisa."
+    },
+    {
+      "icon": "shield",
+      "title": "Garantía de la red SPG",
+      "text": "Respaldo en piezas y mano de obra, con asistencia a nivel nacional."
+    },
+    {
+      "icon": "wrench",
+      "title": "Taller multimarca",
+      "text": "Trabajamos todas las marcas manteniendo la garantía oficial de tu vehículo."
+    },
+    {
+      "icon": "diagnostics",
+      "title": "Diagnóstico preciso",
+      "text": "Equipos de diagnosis y formación continua para reparar la causa real."
+    }
   ],
   "about": {
     "eyebrow": "Sobre nosotros",
@@ -39,9 +55,15 @@
     "cta": "Conoce nuestra historia"
   },
   "aboutPoints": [
-    { "text": "Trato cercano y presupuesto claro antes de empezar" },
-    { "text": "Recambios de calidad y garantía en cada reparación" },
-    { "text": "Atención por WhatsApp para pedir cita sin llamadas" }
+    {
+      "text": "Trato cercano y presupuesto claro antes de empezar"
+    },
+    {
+      "text": "Recambios de calidad y garantía en cada reparación"
+    },
+    {
+      "text": "Atención por WhatsApp para pedir cita sin llamadas"
+    }
   ],
   "reviews": {
     "eyebrow": "Opiniones",
