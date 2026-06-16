@@ -78,3 +78,37 @@ content:
       - { name: publishDate, label: "Fecha de publicación", type: date, required: true,
           help: "Formato AAAA-MM-DD." }
       - { name: body, label: "Contenido", type: rich-text }
+
+  # ---- Datos del negocio (singleton -> archivo de datos editable) -------
+  - name: business
+    label: "Datos del negocio"
+    type: singleton
+    path: src/data/site.json
+    format: json
+    fields:
+      - { name: name, label: "Nombre del negocio", type: string, required: true,
+          help: "Debe coincidir EXACTO con Google Business Profile." }
+      - { name: tagline, label: "Eslogan", type: string }
+      - { name: description, label: "Descripción (SEO)", type: text }
+      - { name: logo, label: "Logo", type: image,
+          help: "SVG o PNG. Si se deja vacío, se muestra el nombre como texto." }
+      - { name: phone, label: "Teléfono", type: string,
+          help: "Actualiza automáticamente los enlaces de llamada y WhatsApp." }
+      - { name: email, label: "Email", type: string }
+      - { name: whatsappMessage, label: "Mensaje de WhatsApp prerellenado", type: text }
+      - name: address
+        label: "Dirección"
+        type: object
+        fields:
+          - { name: street, label: "Calle", type: string }
+          - { name: district, label: "Barrio / distrito", type: string }
+          - { name: locality, label: "Ciudad", type: string }
+          - { name: region, label: "Provincia", type: string }
+          - { name: postalCode, label: "Código postal", type: string }
+          - { name: countryName, label: "País", type: string }
+          - { name: country, label: "Código de país (ISO, p. ej. ES)", type: string }
+      - name: social
+        label: "Redes sociales"
+        type: object
+        fields:
+          - { name: facebook, label: "Facebook URL", type: string }
