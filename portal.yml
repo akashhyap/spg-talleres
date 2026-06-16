@@ -1,0 +1,80 @@
+# portal.yml — esquema de contenido editable por el Portal LocalLeads
+# Sitio: Taller Isidro A. Pons (SPG Talleres) — Astro 5
+#
+# El Portal SOLO edita los campos declarados aquí. Las claves del frontmatter
+# que no se declaran (keywords, related, relatedServices) se conservan intactas
+# al guardar, así que la build de Astro nunca se rompe.
+version: 1
+
+# Dónde se suben imágenes/logos y la ruta pública que sirve Astro.
+# Debe vivir en public/: Astro solo expone public/ en la raíz del sitio; los
+# archivos en src/assets/ solo se sirven a través del pipeline <Image>.
+media:
+  input: public/uploads
+  output: /uploads
+  extensions: [jpg, jpeg, png, webp, svg, avif]
+  maxSize: 4MB
+
+content:
+  # ---- Servicios (colección de 12 páginas) ------------------------------
+  - name: services
+    label: Servicios
+    type: collection
+    path: src/content/services
+    filename: "{slug}.md"
+    format: md
+    titleField: title
+    # Los clientes pueden crear y editar; borrar/renombrar queda para staff.
+    operations: { create: true, edit: true, delete: false, rename: false }
+    fields:
+      - { name: title, label: "Título (SEO)", type: string, required: true,
+          help: "Aparece en la pestaña del navegador y en los resultados de Google." }
+      - { name: shortTitle, label: "Título corto", type: string, required: true,
+          help: "Nombre breve usado en menús y tarjetas." }
+      - { name: description, label: "Meta descripción", type: text, required: true,
+          help: "Ideal 150-160 caracteres para Google." }
+      - { name: summary, label: "Resumen", type: text, required: true,
+          help: "Frase de entrada mostrada en la página y en las tarjetas." }
+      # Icono restringido a los identificadores que reconoce Icon.astro: si se
+      # escribe cualquier otra cosa, el icono se renderiza en blanco sin aviso.
+      - name: icon
+        label: "Icono"
+        type: select
+        required: true
+        options:
+          - { value: wrench, label: "Llave (mecánica general)" }
+          - { value: oil, label: "Aceite y filtros" }
+          - { value: brake, label: "Frenos" }
+          - { value: tire, label: "Neumáticos" }
+          - { value: diagnostics, label: "Diagnosis electrónica" }
+          - { value: battery, label: "Batería / electricidad" }
+          - { value: snowflake, label: "Aire acondicionado" }
+          - { value: belt, label: "Correa de distribución" }
+          - { value: clutch, label: "Embrague" }
+          - { value: suspension, label: "Suspensión y dirección" }
+          - { value: clipboard, label: "Revisiones / pre-ITV" }
+          - { value: engine, label: "Motor" }
+      - { name: order, label: "Orden", type: number, default: 0,
+          help: "Posición en los listados (menor = primero)." }
+      - { name: featured, label: "Destacado", type: boolean, default: false }
+      - { name: body, label: "Contenido", type: rich-text }
+
+  # ---- Guías (colección informativa) ------------------------------------
+  - name: guias
+    label: Guías
+    type: collection
+    path: src/content/guias
+    filename: "{slug}.md"
+    format: md
+    titleField: title
+    operations: { create: true, edit: true, delete: false, rename: false }
+    fields:
+      - { name: title, label: "Título", type: string, required: true }
+      - { name: description, label: "Meta descripción", type: text, required: true,
+          help: "Ideal 150-160 caracteres para Google." }
+      - { name: summary, label: "Resumen", type: text, required: true }
+      # Requerido por content.config.ts (z.coerce.date, sin default): declararlo
+      # evita que una guía creada desde el Portal rompa la build.
+      - { name: publishDate, label: "Fecha de publicación", type: date, required: true,
+          help: "Formato AAAA-MM-DD." }
+      - { name: body, label: "Contenido", type: rich-text }
