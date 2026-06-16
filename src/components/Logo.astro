@@ -1,4 +1,6 @@
 ---
+import { site } from '@data/site';
+
 interface Props {
   class?: string;
   light?: boolean;
@@ -6,6 +8,11 @@ interface Props {
 const { class: className = 'h-10 w-auto', light = false } = Astro.props;
 const textMain = light ? 'text-white' : 'text-brand-900';
 const textSub = light ? 'text-brand-100' : 'text-brand-500';
+
+// Logo personalizado (subido desde el Portal a /uploads). Si está vacío se usa
+// la marca por defecto (rueda dentada + texto). Es <img> y no <Image> porque la
+// ruta es dinámica desde public/, fuera del pipeline de astro:assets.
+const customLogo = site.logo;
 
 // Rueda dentada. El "hueco" del cubo coincide con el fondo (blanco en cabecera,
 // azul oscuro en el pie) para que se vea como una rueda con buje.
@@ -22,14 +29,20 @@ for (let i = 0; i < n; i++) {
 gear += `<circle cx="${cx}" cy="${cy}" r="${rOut * 0.82}" fill="${disc}"/><circle cx="${cx}" cy="${cy}" r="${rOut * 0.4}" fill="${hole}"/><circle cx="${cx}" cy="${cy}" r="${rOut * 0.17}" fill="${center}"/>`;
 ---
 
-<span class={`inline-flex items-center gap-2 ${className}`}>
-  <svg viewBox="0 0 48 48" class="h-full w-auto shrink-0" aria-hidden="true" set:html={gear}></svg>
-  <span class="flex flex-col leading-none">
-    <span class={`font-display text-[1.05rem] font-semibold tracking-tight ${textMain}`}>
-      Taller Isidro Pons
+{
+  customLogo ? (
+    <img src={customLogo} alt={site.name} class={className} />
+  ) : (
+    <span class={`inline-flex items-center gap-2 ${className}`}>
+      <svg viewBox="0 0 48 48" class="h-full w-auto shrink-0" aria-hidden="true" set:html={gear} />
+      <span class="flex flex-col leading-none">
+        <span class={`font-display text-[1.05rem] font-semibold tracking-tight ${textMain}`}>
+          {site.shortName}
+        </span>
+        <span class={`mt-1 text-[0.62rem] font-normal uppercase tracking-[0.2em] ${textSub}`}>
+          {site.brand}
+        </span>
+      </span>
     </span>
-    <span class={`mt-1 text-[0.62rem] font-normal uppercase tracking-[0.2em] ${textSub}`}>
-      SPG Talleres
-    </span>
-  </span>
-</span>
+  )
+}
