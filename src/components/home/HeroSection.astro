@@ -1,9 +1,12 @@
 ---
 import { Image } from 'astro:assets';
 import { site } from '@data/site';
+import home from '@data/home.json';
 import Icon from '@components/Icon.astro';
 import StarRating from '@components/StarRating.astro';
 import heroCar from '@/assets/hero-car.png';
+
+const hero = home.hero;
 
 const rating = site.rating.value.toString().replace('.', ',');
 ---
@@ -24,17 +27,17 @@ const rating = site.rating.value.toString().replace('.', ',');
       <p class="flex items-center gap-3">
         <span class="inline-block h-4 w-5 -skew-x-12 bg-accent-600" aria-hidden="true"></span>
         <span class="text-xs font-extrabold uppercase tracking-[0.18em] text-accent-600 sm:text-sm">
-          El taller de confianza en Palma · desde {site.foundedYear}
+          {hero.eyebrow}
         </span>
       </p>
 
       <!-- Titular -->
       <h1 class="mt-5 font-display text-[clamp(2.5rem,1.8rem+3.2vw,4rem)] font-extrabold uppercase leading-[0.98] tracking-tight text-brand-900">
-        Cuidamos<br />tu coche<br /><span class="text-brand-600">en Palma</span>
+        {hero.headingLine1}<br />{hero.headingLine2}<br /><span class="text-brand-600">{hero.headingAccent}</span>
       </h1>
 
       <p class="mt-5 max-w-lg text-base leading-relaxed text-slate-600 sm:text-lg">
-        Mecánica, neumáticos, diagnosis e ITV. Taller multimarca con garantía de la red SPG Talleres.
+        {hero.subcopy}
       </p>
 
       <!-- CTAs (esquinas rectas, estilo Macchina) -->
@@ -45,13 +48,13 @@ const rating = site.rating.value.toString().replace('.', ',');
           rel="noopener"
           class="inline-flex items-center justify-center gap-2 bg-brand-700 px-7 py-4 text-sm font-extrabold uppercase tracking-widest text-white transition-colors hover:bg-brand-800"
         >
-          Pedir cita
+          {hero.ctaPrimary}
         </a>
         <a
           href="/servicios"
           class="inline-flex items-center justify-center border-2 border-brand-900 px-7 py-4 text-sm font-extrabold uppercase tracking-widest text-brand-900 transition-colors hover:bg-brand-900 hover:text-white"
         >
-          Ver servicios
+          {hero.ctaSecondary}
         </a>
       </div>
 
@@ -63,16 +66,16 @@ const rating = site.rating.value.toString().replace('.', ',');
             <span class="flex items-center gap-2 font-display text-2xl font-extrabold text-brand-900">
               {rating} <StarRating value={site.rating.value} size={15} />
             </span>
-            <span class="text-sm text-slate-500">{site.rating.count} reseñas en Google</span>
+            <span class="text-sm text-slate-500">{site.rating.count} {hero.ratingLabel}</span>
           </dd>
         </div>
         <div>
-          <dt class="font-display text-2xl font-extrabold text-brand-900">+95</dt>
-          <dd class="text-sm text-slate-500">años de experiencia</dd>
+          <dt class="font-display text-2xl font-extrabold text-brand-900">{hero.statYearsValue}</dt>
+          <dd class="text-sm text-slate-500">{hero.statYearsLabel}</dd>
         </div>
         <div>
-          <dt class="font-display text-2xl font-extrabold text-brand-900">Multimarca</dt>
-          <dd class="text-sm text-slate-500">con garantía SPG</dd>
+          <dt class="font-display text-2xl font-extrabold text-brand-900">{hero.statBrandValue}</dt>
+          <dd class="text-sm text-slate-500">{hero.statBrandLabel}</dd>
         </div>
       </dl>
     </div>

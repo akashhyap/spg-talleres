@@ -112,3 +112,107 @@ content:
         type: object
         fields:
           - { name: facebook, label: "Facebook URL", type: string }
+
+  # ---- Página de inicio (singleton -> src/data/home.json) ---------------
+  - name: homepage
+    label: "Página de inicio"
+    type: singleton
+    path: src/data/home.json
+    format: json
+    fields:
+      - name: seo
+        label: "SEO"
+        type: object
+        fields:
+          - { name: title, label: "Título SEO", type: string, required: true }
+          - { name: description, label: "Meta descripción", type: text,
+              help: "Si se deja vacío se usa la descripción del negocio." }
+      - name: hero
+        label: "Hero (cabecera)"
+        type: object
+        fields:
+          - { name: eyebrow, label: "Texto superior", type: string }
+          - { name: headingLine1, label: "Titular — línea 1", type: string }
+          - { name: headingLine2, label: "Titular — línea 2", type: string }
+          - { name: headingAccent, label: "Titular — línea destacada", type: string }
+          - { name: subcopy, label: "Subtítulo", type: text }
+          - { name: ctaPrimary, label: "Botón principal", type: string }
+          - { name: ctaSecondary, label: "Botón secundario", type: string }
+          - { name: ratingLabel, label: "Etiqueta de reseñas", type: string }
+          - { name: statYearsValue, label: "Dato 1 — valor", type: string }
+          - { name: statYearsLabel, label: "Dato 1 — etiqueta", type: string }
+          - { name: statBrandValue, label: "Dato 2 — valor", type: string }
+          - { name: statBrandLabel, label: "Dato 2 — etiqueta", type: string }
+      - name: services
+        label: "Sección Servicios"
+        type: object
+        fields:
+          - { name: eyebrow, label: "Texto superior", type: string }
+          - { name: heading, label: "Título", type: string }
+          - { name: intro, label: "Introducción", type: text }
+          - { name: ctaAll, label: "Botón ver todos", type: string }
+      - name: whyus
+        label: "Sección Por qué elegirnos"
+        type: object
+        fields:
+          - { name: eyebrow, label: "Texto superior", type: string }
+          - { name: heading, label: "Título", type: string }
+      - name: features
+        label: "Características (Por qué elegirnos)"
+        type: list
+        fields:
+          - name: icon
+            label: "Icono"
+            type: select
+            options:
+              - { value: award, label: "Premio / experiencia" }
+              - { value: shield, label: "Garantía / escudo" }
+              - { value: wrench, label: "Llave" }
+              - { value: diagnostics, label: "Diagnosis" }
+              - { value: engine, label: "Motor" }
+              - { value: clipboard, label: "Revisiones" }
+              - { value: checkCircle, label: "Verificado" }
+              - { value: users, label: "Equipo / clientes" }
+              - { value: battery, label: "Electricidad" }
+              - { value: tire, label: "Neumáticos" }
+              - { value: brake, label: "Frenos" }
+              - { value: oil, label: "Aceite" }
+              - { value: snowflake, label: "Aire acondicionado" }
+          - { name: title, label: "Título", type: string }
+          - { name: text, label: "Descripción", type: text }
+      - name: about
+        label: "Sección Sobre nosotros"
+        type: object
+        fields:
+          - { name: eyebrow, label: "Texto superior", type: string }
+          - { name: heading, label: "Título", type: string }
+          - { name: cta, label: "Botón", type: string }
+      - name: aboutPoints
+        label: "Sobre nosotros — puntos"
+        type: list
+        fields:
+          - { name: text, label: "Punto", type: string }
+      - name: reviews
+        label: "Sección Opiniones"
+        type: object
+        fields:
+          - { name: eyebrow, label: "Texto superior", type: string }
+          - { name: heading, label: "Título", type: string }
+          - { name: ratingPrefix, label: "Texto antes del número", type: string }
+          - { name: ratingSuffix, label: "Texto después del número", type: string }
+          - { name: ctaGoogle, label: "Botón reseñas Google", type: string }
+          - { name: ctaMore, label: "Botón más opiniones", type: string }
+      - name: guides
+        label: "Sección Guías"
+        type: object
+        fields:
+          - { name: eyebrow, label: "Texto superior", type: string }
+          - { name: heading, label: "Título", type: string }
+          - { name: ctaAll, label: "Botón ver todas", type: string }
+          - { name: ctaRead, label: "Texto leer guía", type: string }
+      - name: location
+        label: "Sección Ubicación"
+        type: object
+        fields:
+          - { name: heading, label: "Título", type: string }
+          - { name: cta, label: "Botón", type: string }

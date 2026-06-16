@@ -1,0 +1,64 @@
+{
+  "seo": {
+    "title": "Taller mecánico en Palma de Mallorca",
+    "description": ""
+  },
+  "hero": {
+    "eyebrow": "El taller de confianza en Palma · desde 1925",
+    "headingLine1": "Cuidamos",
+    "headingLine2": "tu coche",
+    "headingAccent": "en Palma",
+    "subcopy": "Mecánica, neumáticos, diagnosis e ITV. Taller multimarca con garantía de la red SPG Talleres.",
+    "ctaPrimary": "Pedir cita",
+    "ctaSecondary": "Ver servicios",
+    "ratingLabel": "reseñas en Google",
+    "statYearsValue": "+95",
+    "statYearsLabel": "años de experiencia",
+    "statBrandValue": "Multimarca",
+    "statBrandLabel": "con garantía SPG"
+  },
+  "services": {
+    "eyebrow": "Qué hacemos",
+    "heading": "Servicios de nuestro taller en Palma",
+    "intro": "Del mantenimiento básico a las reparaciones más complejas. Todo lo que tu coche necesita, en un mismo taller de confianza.",
+    "ctaAll": "Ver todos los servicios"
+  },
+  "whyus": {
+    "eyebrow": "Por qué elegirnos",
+    "heading": "Un taller en el que dejar tu coche tranquilo"
+  },
+  "features": [
+    { "icon": "award", "title": "Experiencia desde 1925", "text": "Casi un siglo reparando coches en Palma. La confianza no se improvisa." },
+    { "icon": "shield", "title": "Garantía de la red SPG", "text": "Respaldo en piezas y mano de obra, con asistencia a nivel nacional." },
+    { "icon": "wrench", "title": "Taller multimarca", "text": "Trabajamos todas las marcas manteniendo la garantía oficial de tu vehículo." },
+    { "icon": "diagnostics", "title": "Diagnóstico preciso", "text": "Equipos de diagnosis y formación continua para reparar la causa real." }
+  ],
+  "about": {
+    "eyebrow": "Sobre nosotros",
+    "heading": "Taller Isidro A. Pons, mecánica de confianza desde 1925",
+    "cta": "Conoce nuestra historia"
+  },
+  "aboutPoints": [
+    { "text": "Trato cercano y presupuesto claro antes de empezar" },
+    { "text": "Recambios de calidad y garantía en cada reparación" },
+    { "text": "Atención por WhatsApp para pedir cita sin llamadas" }
+  ],
+  "reviews": {
+    "eyebrow": "Opiniones",
+    "heading": "Lo que dicen nuestros clientes",
+    "ratingPrefix": "Valoración media basada en",
+    "ratingSuffix": "reseñas de Google",
+    "ctaGoogle": "Ver reseñas en Google",
+    "ctaMore": "Más sobre nuestras opiniones"
+  },
+  "guides": {
+    "eyebrow": "Guías del taller",
+    "heading": "Consejos para el cuidado de tu coche",
+    "ctaAll": "Ver todas las guías",
+    "ctaRead": "Leer guía"
+  },
+  "location": {
+    "heading": "Dónde estamos",
+    "cta": "Cómo llegar y pedir cita"
+  }
+}

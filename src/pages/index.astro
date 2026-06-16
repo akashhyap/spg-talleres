@@ -8,6 +8,7 @@ import CTASection from '@components/CTASection.astro';
 import StarRating from '@components/StarRating.astro';
 import Icon from '@components/Icon.astro';
 import { site } from '@data/site';
+import home from '@data/home.json';
 import fachadaImg from '@/assets/fachada-taller.jpg';
 
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
@@ -15,28 +16,23 @@ const guias = (await getCollection('guias'))
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
   .slice(0, 3);
 
-const features = [
-  { icon: 'award', title: 'Experiencia desde 1925', text: 'Casi un siglo reparando coches en Palma. La confianza no se improvisa.' },
-  { icon: 'shield', title: 'Garantía de la red SPG', text: 'Respaldo en piezas y mano de obra, con asistencia a nivel nacional.' },
-  { icon: 'wrench', title: 'Taller multimarca', text: 'Trabajamos todas las marcas manteniendo la garantía oficial de tu vehículo.' },
-  { icon: 'diagnostics', title: 'Diagnóstico preciso', text: 'Equipos de diagnosis y formación continua para reparar la causa real.' },
-];
+const features = home.features;
 
-const description = site.description;
+const description = home.seo.description || site.description;
 ---
 
-<BaseLayout title="Taller mecánico en Palma de Mallorca" description={description}>
+<BaseLayout title={home.seo.title} description={description}>
   <Hero />
 
   <!-- Servicios -->
   <section class="container-page py-16 lg:py-20" aria-labelledby="servicios-titulo">
     <div class="mx-auto max-w-2xl text-center">
-      <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">Qué hacemos</p>
+      <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">{home.services.eyebrow}</p>
       <h2 id="servicios-titulo" class="mt-2 text-[length:var(--text-h2)] font-bold text-brand-900">
-        Servicios de nuestro taller en Palma
+        {home.services.heading}
       </h2>
       <p class="mt-4 text-lg text-slate-600">
-        Del mantenimiento básico a las reparaciones más complejas. Todo lo que tu coche necesita, en un mismo taller de confianza.
+        {home.services.intro}
       </p>
     </div>
     <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -44,7 +40,7 @@ const description = site.description;
     </div>
     <div class="mt-10 text-center">
       <a href="/servicios" class="inline-flex items-center gap-2 rounded-xl border border-brand-200 bg-white px-6 py-3 font-semibold text-brand-700 transition-colors hover:bg-brand-50">
-        Ver todos los servicios <Icon name="arrowRight" size={18} />
+        {home.services.ctaAll} <Icon name="arrowRight" size={18} />
       </a>
     </div>
   </section>
@@ -53,9 +49,9 @@ const description = site.description;
   <section class="bg-brand-50/60 py-16 lg:py-20" aria-labelledby="porque-titulo">
     <div class="container-page">
       <div class="mx-auto max-w-2xl text-center">
-        <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">Por qué elegirnos</p>
+        <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">{home.whyus.eyebrow}</p>
         <h2 id="porque-titulo" class="mt-2 text-[length:var(--text-h2)] font-bold text-brand-900">
-          Un taller en el que dejar tu coche tranquilo
+          {home.whyus.heading}
         </h2>
       </div>
       <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -87,9 +83,9 @@ const description = site.description;
         />
       </div>
       <div>
-        <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">Sobre nosotros</p>
+        <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">{home.about.eyebrow}</p>
         <h2 id="sobre-titulo" class="mt-2 text-[length:var(--text-h2)] font-bold text-brand-900">
-          Taller Isidro A. Pons, mecánica de confianza desde 1925
+          {home.about.heading}
         </h2>
         <p class="mt-4 text-lg leading-relaxed text-slate-600">
           Somos un taller familiar con casi un siglo de historia en Palma. Formamos parte de la
@@ -98,15 +94,15 @@ const description = site.description;
           de siempre.
         </p>
         <ul class="mt-6 space-y-3">
-          {['Trato cercano y presupuesto claro antes de empezar', 'Recambios de calidad y garantía en cada reparación', 'Atención por WhatsApp para pedir cita sin llamadas'].map((item) => (
+          {home.aboutPoints.map((item) => (
             <li class="flex items-start gap-3 text-slate-700">
               <Icon name="checkCircle" size={22} class="mt-0.5 shrink-0 text-brand-600" />
-              <span>{item}</span>
+              <span>{item.text}</span>
             </li>
           ))}
         </ul>
         <a href="/sobre-nosotros" class="mt-7 inline-flex items-center gap-2 font-semibold text-brand-700 hover:text-brand-900">
-          Conoce nuestra historia <Icon name="arrowRight" size={18} />
+          {home.about.cta} <Icon name="arrowRight" size={18} />
         </a>
       </div>
     </div>
@@ -115,21 +111,21 @@ const description = site.description;
   <!-- Opiniones -->
   <section class="bg-brand-50/60 py-16 lg:py-20" aria-labelledby="opiniones-titulo">
     <div class="container-page flex flex-col items-center gap-6 text-center">
-      <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">Opiniones</p>
+      <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">{home.reviews.eyebrow}</p>
       <h2 id="opiniones-titulo" class="text-[length:var(--text-h2)] font-bold text-brand-900">
-        Lo que dicen nuestros clientes
+        {home.reviews.heading}
       </h2>
       <div class="flex flex-col items-center gap-2">
         <span class="font-display text-5xl font-extrabold text-brand-900">{site.rating.value}</span>
         <StarRating value={site.rating.value} size={26} />
-        <p class="text-slate-600">Valoración media basada en {site.rating.count} reseñas de Google</p>
+        <p class="text-slate-600">{home.reviews.ratingPrefix} {site.rating.count} {home.reviews.ratingSuffix}</p>
       </div>
       <div class="flex flex-col gap-3 sm:flex-row">
         <a href={site.googleMapsUrl} target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white hover:bg-brand-700">
-          <Icon name="star" size={18} /> Ver reseñas en Google
+          <Icon name="star" size={18} /> {home.reviews.ctaGoogle}
         </a>
         <a href="/opiniones" class="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-200 bg-white px-6 py-3 font-semibold text-brand-700 hover:bg-white">
-          Más sobre nuestras opiniones
+          {home.reviews.ctaMore}
         </a>
       </div>
     </div>
@@ -139,13 +135,13 @@ const description = site.description;
   <section class="container-page py-16 lg:py-20" aria-labelledby="guias-titulo">
     <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
       <div>
-        <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">Guías del taller</p>
+        <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">{home.guides.eyebrow}</p>
         <h2 id="guias-titulo" class="mt-2 text-[length:var(--text-h2)] font-bold text-brand-900">
-          Consejos para el cuidado de tu coche
+          {home.guides.heading}
         </h2>
       </div>
       <a href="/guias" class="inline-flex items-center gap-2 font-semibold text-brand-700 hover:text-brand-900">
-        Ver todas las guías <Icon name="arrowRight" size={18} />
+        {home.guides.ctaAll} <Icon name="arrowRight" size={18} />
       </a>
     </div>
     <div class="mt-10 grid gap-5 md:grid-cols-3">
@@ -155,7 +151,7 @@ const description = site.description;
             <h3 class="text-lg font-semibold text-brand-900 group-hover:text-brand-700">{g.data.title}</h3>
             <p class="mt-2 flex-1 text-[0.95rem] leading-relaxed text-slate-600">{g.data.summary}</p>
             <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
-              Leer guía <Icon name="arrowRight" size={16} class="transition-transform group-hover:translate-x-1" />
+              {home.guides.ctaRead} <Icon name="arrowRight" size={16} class="transition-transform group-hover:translate-x-1" />
             </span>
           </a>
         ))
@@ -169,7 +165,7 @@ const description = site.description;
   <section class="container-page mb-20" aria-labelledby="ubicacion-titulo">
     <div class="grid overflow-hidden rounded-3xl border border-slate-200 shadow-sm lg:grid-cols-2">
       <div class="bg-white p-8 lg:p-10">
-        <h2 id="ubicacion-titulo" class="text-[length:var(--text-h3)] font-bold text-brand-900">Dónde estamos</h2>
+        <h2 id="ubicacion-titulo" class="text-[length:var(--text-h3)] font-bold text-brand-900">{home.location.heading}</h2>
         <ul class="mt-6 space-y-4 text-slate-700">
           <li class="flex items-start gap-3">
             <Icon name="mapPin" size={22} class="mt-0.5 shrink-0 text-brand-600" />
@@ -185,7 +181,7 @@ const description = site.description;
           </li>
         </ul>
         <a href="/contacto" class="mt-7 inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white hover:bg-brand-700">
-          Cómo llegar y pedir cita <Icon name="arrowRight" size={18} />
+          {home.location.cta} <Icon name="arrowRight" size={18} />
         </a>
       </div>
       <div class="min-h-[320px]">
